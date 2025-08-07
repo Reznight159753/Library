@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Hệ thống Quản lý Thư viện</title>
+    <link href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 900px;
+            min-height: 500px;
+        }
+        
+        .login-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .login-form {
+            padding: 40px;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .btn-login {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(45deg, #764ba2, #667eea);
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        
+        .demo-accounts {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="login-container">
+                    <div class="row g-0">
+                        <div class="col-md-6">
+                            <div class="login-header d-flex flex-column justify-content-center h-100">
+                                <div>
+                                    <i class="fas fa-book fa-4x mb-4"></i>
+                                    <h2>Hệ thống Quản lý Thư viện</h2>
+                                    <p class="lead">Đăng nhập để truy cập hệ thống</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="login-form">
+                                <h3 class="text-center mb-4">Đăng nhập</h3>
+                                
+                                <!-- Error Message -->
+                                <div th:if="${param.error}" class="alert alert-danger">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Tên đăng nhập hoặc mật khẩu không đúng!
+                                </div>
+                                
+                                <!-- Logout Message -->
+                                <div th:if="${param.logout}" class="alert alert-success">
+                                    <i class="fas fa-check-circle"></i>
+                                    Bạn đã đăng xuất thành công!
+                                </div>
+                                
+                                <form th:action="@{/login}" method="post">
+                                    <div class="mb-3">
+                                        <label for="username" class="form-label">
+                                            <i class="fas fa-user"></i> Tên đăng nhập
+                                        </label>
+                                        <input type="text" class="form-control" id="username" name="username" required>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label for="password" class="form-label">
+                                            <i class="fas fa-lock"></i> Mật khẩu
+                                        </label>
+                                        <input type="password" class="form-control" id="password" name="password" required>
+                                    </div>
+                                    
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-primary btn-login">
+                                            <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                                        </button>
+                                    </div>
+                                </form>
+                                
+                                <!-- Demo Accounts -->
+                                <div class="demo-accounts">
+                                    <h6><i class="fas fa-info-circle"></i> Tài khoản demo:</h6>
+                                    <small>
+                                        <strong>Quản lý:</strong> admin / admin123<br>
+                                        <strong>Thủ thư:</strong> thuthu / thuthu123
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Hệ thống Quản lý Thư viện</title>
+    <link href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            color: #2c3e50 !important;
+        }
+        
+        .sidebar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-top: 20px;
+        }
+        
+        .sidebar .nav-link {
+            color: white;
+            padding: 12px 20px;
+            margin: 5px 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar .nav-link:hover {
+            background-color: rgba(255,255,255,0.2);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .sidebar .nav-link.active {
+            background-color: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        .main-content {
+            padding: 20px;
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stats-card .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .stats-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .stats-card .label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .welcome-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .quick-actions {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        .btn-quick-action {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 5px;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+        
+        .btn-quick-action:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/thuvien/dashboard">
+                <i class="fas fa-book"></i> Hệ thống Quản lý Thư viện
+            </a>
+            
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3">
+                    <i class="fas fa-user"></i> 
+                    Xin chào, <span sec:authentication="name">User</span>
+                    (<span sec:authentication="authorities">Role</span>)
+                </span>
+                <a class="btn btn-outline-light btn-sm" href="/thuvien/logout">
+                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <nav class="nav flex-column">
+                    <a class="nav-link active" href="/thuvien/dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                    
+                    <a class="nav-link" href="/thuvien/sach">
+                        <i class="fas fa-book"></i> Quản lý Sách
+                    </a>
+                    
+                    <a class="nav-link" href="/thuvien/docgia">
+                        <i class="fas fa-users"></i> Quản lý Độc giả
+                    </a>
+                    
+                    <div sec:authorize="hasRole('THUTHU')">
+                        <a class="nav-link" href="/thuvien/thuthu/muon-sach">
+                            <i class="fas fa-hand-holding"></i> Mượn Sách
+                        </a>
+                        <a class="nav-link" href="/thuvien/thuthu/tra-sach">
+                            <i class="fas fa-undo"></i> Trả Sách
+                        </a>
+                    </div>
+                    
+                    <div sec:authorize="hasRole('QUANLY')">
+                        <hr class="text-white">
+                        <h6 class="text-white-50 px-3">QUẢN TRỊ</h6>
+                        <a class="nav-link" href="/thuvien/quanly">
+                            <i class="fas fa-cog"></i> Quản lý Hệ thống
+                        </a>
+                        <a class="nav-link" href="/thuvien/quanly/nhan-vien">
+                            <i class="fas fa-user-tie"></i> Quản lý Nhân viên
+                        </a>
+                        <a class="nav-link" href="/thuvien/quanly/tai-khoan">
+                            <i class="fas fa-key"></i> Quản lý Tài khoản
+                        </a>
+                        <a class="nav-link" href="/thuvien/quanly/loai-sach">
+                            <i class="fas fa-tags"></i> Quản lý Loại sách
+                        </a>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                <!-- Welcome Card -->
+                <div class="welcome-card">
+                    <h2><i class="fas fa-home"></i> Chào mừng đến với Hệ thống Quản lý Thư viện</h2>
+                    <p class="lead">Hệ thống giúp bạn quản lý thông tin sách, độc giả và các hoạt động của thư viện một cách hiệu quả.</p>
+                    <p>Bạn đang đăng nhập với vai trò: <strong sec:authentication="authorities"></strong></p>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3">
+                        <div class="stats-card">
+                            <div class="icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="number">0</div>
+                            <div class="label">Tổng số sách</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3 mb-3">
+                        <div class="stats-card">
+                            <div class="icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="number">0</div>
+                            <div class="label">Độc giả</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3 mb-3">
+                        <div class="stats-card">
+                            <div class="icon">
+                                <i class="fas fa-hand-holding"></i>
+                            </div>
+                            <div class="number">0</div>
+                            <div class="label">Sách đang mượn</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3 mb-3" sec:authorize="hasRole('QUANLY')">
+                        <div class="stats-card">
+                            <div class="icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="number">0</div>
+                            <div class="label">Nhân viên</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h4><i class="fas fa-bolt"></i> Thao tác nhanh</h4>
+                    <div class="mt-3">
+                        <a href="/thuvien/sach" class="btn-quick-action">
+                            <i class="fas fa-book"></i> Xem danh sách sách
+                        </a>
+                        
+                        <a href="/thuvien/docgia" class="btn-quick-action">
+                            <i class="fas fa-users"></i> Quản lý độc giả
+                        </a>
+                        
+                        <div sec:authorize="hasRole('THUTHU')">
+                            <a href="/thuvien/thuthu/muon-sach" class="btn-quick-action">
+                                <i class="fas fa-hand-holding"></i> Cho mượn sách
+                            </a>
+                            
+                            <a href="/thuvien/thuthu/tra-sach" class="btn-quick-action">
+                                <i class="fas fa-undo"></i> Trả sách
+                            </a>
+                        </div>
+                        
+                        <div sec:authorize="hasRole('QUANLY')">
+                            <a href="/thuvien/quanly/nhan-vien" class="btn-quick-action">
+                                <i class="fas fa-user-tie"></i> Quản lý nhân viên
+                            </a>
+                            
+                            <a href="/thuvien/quanly/tai-khoan" class="btn-quick-action">
+                                <i class="fas fa-key"></i> Tạo tài khoản
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
