@@ -6,69 +6,133 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "SACH")
 public class Sach {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MASACH")
     private Integer maSach;
-    
-    @Column(name = "TENSACH", length = 255)
+
+    @Column(name = "TENSACH")
     private String tenSach;
-    
-    @Column(name = "TACGIA", length = 100)
+
+    @Column(name = "TACGIA")
     private String tacGia;
-    
+
+    @Column(name = "IMAGE")
+    private String image;
+
     @Column(name = "NAMXB")
-    private Integer namXB;
-    
-    @Column(name = "NXB", length = 100)
+    private Integer namXb;
+
+    @Column(name = "NXB")
     private String nxb;
-    
-    @Column(name = "DONGIA", precision = 10, scale = 2)
+
+    @Column(name = "DONGIA")
     private BigDecimal donGia;
-    
+
     @Column(name = "SOLUONG")
     private Integer soLuong;
-    
-    // Quan hệ với LoaiSach
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "MALOAI", referencedColumnName = "MALOAI")
+
+    @Column(name = "MALOAI")
+    private Integer maLoai;
+
+    @ManyToOne
+    @JoinColumn(name = "MALOAI", insertable = false, updatable = false)
     private LoaiSach loaiSach;
-    
+
     // Constructors
     public Sach() {}
-    
-    public Sach(String tenSach, String tacGia, Integer namXB, String nxb, BigDecimal donGia, Integer soLuong, LoaiSach loaiSach) {
+
+    public Sach(String tenSach, String tacGia, String image, Integer namXb, String nxb, 
+                BigDecimal donGia, Integer soLuong, Integer maLoai) {
         this.tenSach = tenSach;
         this.tacGia = tacGia;
-        this.namXB = namXB;
+        this.image = image;
+        this.namXb = namXb;
         this.nxb = nxb;
         this.donGia = donGia;
         this.soLuong = soLuong;
+        this.maLoai = maLoai;
+    }
+
+    // Getters and Setters
+    public Integer getMaSach() {
+        return maSach;
+    }
+
+    public void setMaSach(Integer maSach) {
+        this.maSach = maSach;
+    }
+
+    public String getTenSach() {
+        return tenSach;
+    }
+
+    public void setTenSach(String tenSach) {
+        this.tenSach = tenSach;
+    }
+
+    public String getTacGia() {
+        return tacGia;
+    }
+
+    public void setTacGia(String tacGia) {
+        this.tacGia = tacGia;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Integer getNamXb() {
+        return namXb;
+    }
+
+    public void setNamXb(Integer namXb) {
+        this.namXb = namXb;
+    }
+
+    public String getNxb() {
+        return nxb;
+    }
+
+    public void setNxb(String nxb) {
+        this.nxb = nxb;
+    }
+
+    public BigDecimal getDonGia() {
+        return donGia;
+    }
+
+    public void setDonGia(BigDecimal donGia) {
+        this.donGia = donGia;
+    }
+
+    public Integer getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(Integer soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public Integer getMaLoai() {
+        return maLoai;
+    }
+
+    public void setMaLoai(Integer maLoai) {
+        this.maLoai = maLoai;
+    }
+
+    public LoaiSach getLoaiSach() {
+        return loaiSach;
+    }
+
+    public void setLoaiSach(LoaiSach loaiSach) {
         this.loaiSach = loaiSach;
     }
-    
-    // Getters and Setters
-    public Integer getMaSach() { return maSach; }
-    public void setMaSach(Integer maSach) { this.maSach = maSach; }
-    
-    public String getTenSach() { return tenSach; }
-    public void setTenSach(String tenSach) { this.tenSach = tenSach; }
-    
-    public String getTacGia() { return tacGia; }
-    public void setTacGia(String tacGia) { this.tacGia = tacGia; }
-    
-    public Integer getNamXB() { return namXB; }
-    public void setNamXB(Integer namXB) { this.namXB = namXB; }
-    
-    public String getNxb() { return nxb; }
-    public void setNxb(String nxb) { this.nxb = nxb; }
-    
-    public BigDecimal getDonGia() { return donGia; }
-    public void setDonGia(BigDecimal donGia) { this.donGia = donGia; }
-    
-    public Integer getSoLuong() { return soLuong; }
-    public void setSoLuong(Integer soLuong) { this.soLuong = soLuong; }
-    
-    public LoaiSach getLoaiSach() { return loaiSach; }
-    public void setLoaiSach(LoaiSach loaiSach) { this.loaiSach = loaiSach; }
 }

@@ -1,54 +1,45 @@
 package com.thuvien.quanlythuvien.config;
 
-import com.thuvien.quanlythuvien.service.CustomUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authz -> authz
-                .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
-                .requestMatchers("/admin/**", "/quanly/**").hasRole("QUANLY")
-                .requestMatchers("/thuthu/**").hasAnyRole("QUANLY", "THUTHU")
-                .requestMatchers("/", "/dashboard", "/sach/**", "/docgia/**").authenticated()
+        http
+            .authorizeHttpRequests(authz -> authz
+                .requestMatchers("/dangnhap", "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/dashboard", true)
-                .failureUrl("/login?error=true")
+                .loginPage("/dangnhap")
+                .loginProcessingUrl("/dangnhap")
+                .usernameParameter("tenTk") // Ánh xạ trường tenTk
+                .passwordParameter("matKhau") // Ánh xạ trường matKhau
+                .defaultSuccessUrl("/home", true)
+                .failureUrl("/dangnhap?error=true")
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout=true")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
+                .logoutUrl("/dangxuat")
+                .logoutSuccessUrl("/dangnhap?logout")
                 .permitAll()
             )
-            .sessionManagement(session -> session
-                .maximumSessions(1)
-                .maxSessionsPreventsLogin(false)
-            );
+            .csrf(csrf -> csrf.disable()); // Tạm thời vô hiệu hóa CSRF để test
 
         return http.build();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService); // không dùng passwordEncoder
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance(); // Sử dụng NoOpPasswordEncoder để hỗ trợ mật khẩu plain text
     }
 }

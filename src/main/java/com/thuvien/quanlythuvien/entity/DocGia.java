@@ -6,53 +6,84 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "DOCGIA")
 public class DocGia {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MADG")
-    private Integer maDG;
-    
-    @Column(name = "TENDG", length = 100)
-    private String tenDG;
-    
+    private Integer maDg;
+
+    @Column(name = "TENDG")
+    private String tenDg;
+
     @Column(name = "NGAYSINH")
     private LocalDate ngaySinh;
-    
-    @Column(name = "GIOITINH", length = 10)
+
+    @Column(name = "GIOITINH")
     private String gioiTinh;
-    
-    @Column(name = "DIACHI", length = 255)
+
+    @Column(name = "DIACHI")
     private String diaChi;
-    
-    @Column(name = "SDT", length = 20)
+
+    @Column(name = "SDT")
     private String sdt;
-    
+
     // Constructors
     public DocGia() {}
-    
-    public DocGia(String tenDG, LocalDate ngaySinh, String gioiTinh, String diaChi, String sdt) {
-        this.tenDG = tenDG;
+
+    public DocGia(String tenDg, LocalDate ngaySinh, String gioiTinh, String diaChi, String sdt) {
+        this.tenDg = tenDg;
         this.ngaySinh = ngaySinh;
         this.gioiTinh = gioiTinh;
         this.diaChi = diaChi;
         this.sdt = sdt;
     }
-    
+
     // Getters and Setters
-    public Integer getMaDG() { return maDG; }
-    public void setMaDG(Integer maDG) { this.maDG = maDG; }
-    
-    public String getTenDG() { return tenDG; }
-    public void setTenDG(String tenDG) { this.tenDG = tenDG; }
-    
-    public LocalDate getNgaySinh() { return ngaySinh; }
-    public void setNgaySinh(LocalDate ngaySinh) { this.ngaySinh = ngaySinh; }
-    
-    public String getGioiTinh() { return gioiTinh; }
-    public void setGioiTinh(String gioiTinh) { this.gioiTinh = gioiTinh; }
-    
-    public String getDiaChi() { return diaChi; }
-    public void setDiaChi(String diaChi) { this.diaChi = diaChi; }
-    
-    public String getSdt() { return sdt; }
-    public void setSdt(String sdt) { this.sdt = sdt; }
+    public Integer getMaDg() {
+        return maDg;
+    }
+
+    public void setMaDg(Integer maDg) {
+        this.maDg = maDg;
+    }
+
+    public String getTenDg() {
+        return tenDg;
+    }
+
+    public void setTenDg(String tenDg) {
+        this.tenDg = tenDg;
+    }
+
+    public LocalDate getNgaySinh() {
+        return ngaySinh;
+    }
+
+    public void setNgaySinh(LocalDate ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
+
+    public String getGioiTinh() {
+        return gioiTinh;
+    }
+
+    public void setGioiTinh(String gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
 }
