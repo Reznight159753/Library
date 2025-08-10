@@ -147,8 +147,8 @@
                                         <td th:text="${sach.maSach}">1</td>
                                         <td>
                                             <img th:if="${sach.image != null and !sach.image.isEmpty()}" 
-                                                 th:src="@{'/images/' + ${sach.image}}" 
-                                                 class="book-image" alt="Book Image">
+                                                 th:src="${sach.image}" 
+                                                 class="book-image">
                                             <div th:if="${sach.image == null or sach.image.isEmpty()}" 
                                                  class="book-image bg-light d-flex align-items-center justify-content-center">
                                                 <i class="fas fa-book text-muted"></i>
