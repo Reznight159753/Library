@@ -9,13 +9,14 @@ import java.util.List;
 
 @Repository
 public interface NhanVienRepository extends JpaRepository<NhanVien, Integer> {
-    
-    List<NhanVien> findByTenNvContainingIgnoreCase(String tenNv);
-    
+
     List<NhanVien> findByChucVu(String chucVu);
-    
+
     List<NhanVien> findBySdtContainingIgnoreCase(String sdt);
-    
+
     @Query("SELECT COUNT(nv) FROM NhanVien nv")
     Long countTotalEmployees();
+
+    @Query("SELECT nv FROM NhanVien nv WHERE nv.tenNv LIKE %:keyword%")
+    List<NhanVien> findByTenNvContainingIgnoreCase(String keyword);
 }

@@ -30,15 +30,13 @@ public class DocGiaService {
         docGiaRepository.deleteById(id);
     }
 
-    public List<DocGia> findByTenDg(String tenDg) {
+    // Thêm phương thức tìm kiếm theo tên
+    public List<DocGia> findByTenDgContainingIgnoreCase(String tenDg) {
         return docGiaRepository.findByTenDgContainingIgnoreCase(tenDg);
     }
 
-    public List<DocGia> findBySdt(String sdt) {
-        return docGiaRepository.findBySdtContainingIgnoreCase(sdt);
-    }
-
+    // Thêm phương thức đếm tổng độc giả (nếu cần cho stats)
     public Long countTotalReaders() {
-        return docGiaRepository.countTotalReaders();
+        return docGiaRepository.count();
     }
 }

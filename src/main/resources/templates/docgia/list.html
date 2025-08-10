@@ -46,7 +46,6 @@
             </div>
         </div>
     </nav>
-
     <div class="container mt-4">
         <!-- Header -->
         <div class="row mb-4">
@@ -66,7 +65,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Search Form -->
         <div class="row mb-4">
             <div class="col-12">
@@ -75,7 +73,7 @@
                         <form method="get" th:action="@{/docgia/list}">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="search" 
+                                    <input type="text" class="form-control" name="search"
                                            th:value="${search}" placeholder="Tìm kiếm theo tên đọc giả...">
                                 </div>
                                 <div class="col-md-4">
@@ -92,7 +90,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Success/Error Messages -->
         <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
             <i class="fas fa-check-circle me-2"></i>
@@ -105,7 +102,6 @@
             <span th:text="${errorMessage}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-
         <!-- Readers Table -->
         <div class="row">
             <div class="col-12">
@@ -135,16 +131,19 @@
                                         </td>
                                     </tr>
                                     <tr th:each="dg : ${docGiaList}">
-                                        <td th:text="${dg.madg}">1</td>
-                                        <td th:text="${dg.tendg}">Tên đọc giả</td>
+                                        <td th:text="${dg.maDg}">1</td>
+                                        <td th:text="${dg.tenDg}">Tên đọc giả</td>
                                         <td th:text="${dg.sdt}">0123456789</td>
-                                        <td th:text="${#dates.format(dg.ngaySinh, 'dd/MM/yyyy')}">01/01/2000</td>
+                                        <td th:text="${#temporals.format(dg.ngaySinh, 'dd/MM/yyyy')}">01/01/2000</td>
                                         <td th:text="${dg.gioiTinh}">Nam</td>
                                         <td th:text="${dg.diaChi}">Hà Nội</td>
                                         <td>
-                                            <button class="btn btn-sm btn-outline-info" title="Xem chi tiết">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
+                                            <a th:href="@{/docgia/edit/{id}(id=${dg.maDg})}" class="btn btn-sm btn-outline-info" title="Sửa">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a th:href="@{/docgia/delete/{id}(id=${dg.maDg})}" class="btn btn-sm btn-outline-danger" title="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa?')">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -155,7 +154,6 @@
             </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

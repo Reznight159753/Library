@@ -8,13 +8,17 @@ import java.util.List;
 
 @Repository
 public interface SachRepository extends JpaRepository<Sach, Integer> {
-    List<Sach> findByTenSachContainingIgnoreCase(String tenSach);
     List<Sach> findByTacGiaContainingIgnoreCase(String tacGia);
+
     List<Sach> findByMaLoai(Integer maLoai);
-    
+
     @Query("SELECT COUNT(s) FROM Sach s")
     Long countTotalBooks();
-    
+
     @Query("SELECT SUM(s.soLuong) FROM Sach s")
     Long sumTotalQuantity();
+
+    @Query("SELECT s FROM Sach s WHERE s.tenSach LIKE %:keyword% AND s.trangThai = 'Available'")
+    List<Sach> findByTenSachContainingIgnoreCase(String keyword);
+
 }

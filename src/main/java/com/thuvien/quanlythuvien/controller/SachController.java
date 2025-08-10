@@ -26,13 +26,11 @@ public class SachController {
     @GetMapping("/list")
     public String danhSachSach(Model model, @RequestParam(required = false) String search) {
         List<Sach> sachList;
-        
         if (search != null && !search.trim().isEmpty()) {
             sachList = sachService.findByTenSach(search.trim());
         } else {
             sachList = sachService.findAll();
         }
-        
         model.addAttribute("sachList", sachList);
         model.addAttribute("search", search);
         return "sach/list";
@@ -48,10 +46,13 @@ public class SachController {
     @PostMapping("/add")
     public String themSach(@ModelAttribute Sach sach, RedirectAttributes redirectAttributes) {
         try {
+            if (sach.getSoLuong() != null && sach.getSoLuong() < 0) {
+                throw new Exception("Số lượng không hợp lệ!");
+            }
             sachService.save(sach);
             redirectAttributes.addFlashAttribute("successMessage", "Thêm sách thành công!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Có lỗi xảy ra khi thêm sách!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Có lỗi xảy ra khi thêm sách: " + e.getMessage());
         }
         return "redirect:/sach/list";
     }
@@ -70,10 +71,13 @@ public class SachController {
     @PostMapping("/edit")
     public String suaSach(@ModelAttribute Sach sach, RedirectAttributes redirectAttributes) {
         try {
+            if (sach.getSoLuong() != null && sach.getSoLuong() < 0) {
+                throw new Exception("Số lượng không hợp lệ!");
+            }
             sachService.save(sach);
             redirectAttributes.addFlashAttribute("successMessage", "Cập nhật sách thành công!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Có lỗi xảy ra khi cập nhật sách!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Có lỗi xảy ra khi cập nhật sách: " + e.getMessage());
         }
         return "redirect:/sach/list";
     }

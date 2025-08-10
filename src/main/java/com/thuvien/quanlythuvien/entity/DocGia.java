@@ -15,6 +15,9 @@ public class DocGia {
     @Column(name = "TENDG")
     private String tenDg;
 
+    @Column(name = "SDT")
+    private String sdt;
+
     @Column(name = "NGAYSINH")
     private LocalDate ngaySinh;
 
@@ -24,18 +27,16 @@ public class DocGia {
     @Column(name = "DIACHI")
     private String diaChi;
 
-    @Column(name = "SDT")
-    private String sdt;
-
     // Constructors
-    public DocGia() {}
+    public DocGia() {
+    }
 
-    public DocGia(String tenDg, LocalDate ngaySinh, String gioiTinh, String diaChi, String sdt) {
+    public DocGia(String tenDg, String sdt, LocalDate ngaySinh, String gioiTinh, String diaChi) {
         this.tenDg = tenDg;
+        this.sdt = sdt;
         this.ngaySinh = ngaySinh;
         this.gioiTinh = gioiTinh;
         this.diaChi = diaChi;
-        this.sdt = sdt;
     }
 
     // Getters and Setters
@@ -53,6 +54,14 @@ public class DocGia {
 
     public void setTenDg(String tenDg) {
         this.tenDg = tenDg;
+    }
+
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
     }
 
     public LocalDate getNgaySinh() {
@@ -79,11 +88,4 @@ public class DocGia {
         this.diaChi = diaChi;
     }
 
-    public String getSdt() {
-        return sdt;
-    }
-
-    public void setSdt(String sdt) {
-        this.sdt = sdt;
-    }
 }

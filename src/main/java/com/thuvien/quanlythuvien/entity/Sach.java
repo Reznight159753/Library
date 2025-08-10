@@ -40,11 +40,14 @@ public class Sach {
     @JoinColumn(name = "MALOAI", insertable = false, updatable = false)
     private LoaiSach loaiSach;
 
-    // Constructors
-    public Sach() {}
+    @Column(name = "TRANGTHAI")
+    private String trangThai = "Available";
 
-    public Sach(String tenSach, String tacGia, String image, Integer namXb, String nxb, 
-                BigDecimal donGia, Integer soLuong, Integer maLoai) {
+    public Sach() {
+    }
+
+    public Sach(String tenSach, String tacGia, String image, Integer namXb, String nxb,
+            BigDecimal donGia, Integer soLuong, Integer maLoai, String trangThai) {
         this.tenSach = tenSach;
         this.tacGia = tacGia;
         this.image = image;
@@ -53,9 +56,9 @@ public class Sach {
         this.donGia = donGia;
         this.soLuong = soLuong;
         this.maLoai = maLoai;
+        this.trangThai = trangThai;
     }
 
-    // Getters and Setters
     public Integer getMaSach() {
         return maSach;
     }
@@ -134,5 +137,13 @@ public class Sach {
 
     public void setLoaiSach(LoaiSach loaiSach) {
         this.loaiSach = loaiSach;
+    }
+
+    public String getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
     }
 }

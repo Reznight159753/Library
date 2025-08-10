@@ -4,6 +4,8 @@ import com.thuvien.quanlythuvien.entity.TaiKhoan;
 import com.thuvien.quanlythuvien.service.TaiKhoanService;
 import com.thuvien.quanlythuvien.service.SachService;
 import com.thuvien.quanlythuvien.service.DocGiaService;
+import com.thuvien.quanlythuvien.service.PhieuMuonService;
+import com.thuvien.quanlythuvien.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +26,12 @@ public class DangNhapController {
 
     @Autowired
     private DocGiaService docGiaService;
+
+    @Autowired
+    private PhieuMuonService phieuMuonService;
+
+    @Autowired
+    private HoaDonService hoaDonService;
 
     @GetMapping("/")
     public String trangChu() {
@@ -54,15 +62,18 @@ public class DangNhapController {
             return "redirect:/dangnhap";
         }
 
-        // Lấy dữ liệu thống kê từ database
         Long totalBooks = sachService.countTotalBooks();
         Long totalQuantity = sachService.sumTotalQuantity();
         Long totalReaders = docGiaService.countTotalReaders();
+        Long totalBorrowed = phieuMuonService.countBorrowed();
+        Long totalSold = hoaDonService.countSold();
 
         model.addAttribute("taikhoan", taiKhoan);
         model.addAttribute("totalBooks", totalBooks != null ? totalBooks : 0);
         model.addAttribute("totalQuantity", totalQuantity != null ? totalQuantity : 0);
         model.addAttribute("totalReaders", totalReaders != null ? totalReaders : 0);
+        model.addAttribute("totalBorrowed", totalBorrowed != null ? totalBorrowed : 0);
+        model.addAttribute("totalSold", totalSold != null ? totalSold : 0);
 
         return "home";
     }
