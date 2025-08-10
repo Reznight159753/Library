@@ -18,7 +18,7 @@ public interface SachRepository extends JpaRepository<Sach, Integer> {
     @Query("SELECT SUM(s.soLuong) FROM Sach s")
     Long sumTotalQuantity();
 
-    @Query("SELECT s FROM Sach s WHERE s.tenSach LIKE %:keyword% AND s.trangThai = 'Available'")
+    @Query("SELECT s FROM Sach s WHERE s.tenSach LIKE %:keyword% AND s.trangThai = 'Available' ORDER BY s.tenSach ASC")
     List<Sach> findByTenSachContainingIgnoreCase(String keyword);
 
 }

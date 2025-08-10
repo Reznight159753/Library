@@ -32,10 +32,16 @@ public class HoaDonService {
         if (hoaDon.getDocGia() == null || hoaDon.getNhanVien() == null) {
             throw new RuntimeException("Vui lòng chọn độc giả và nhân viên");
         }
+
+        // Thiết lập thông tin hóa đơn
         hoaDon.setNgayLap(LocalDate.now());
         hoaDon.setLoai("BAN_SACH");
         BigDecimal tongTien = BigDecimal.ZERO;
 
+        // Lưu hóa đơn trước
+        hoaDon = hoaDonRepository.save(hoaDon);
+
+        // Lưu chi tiết hóa đơn và cập nhật số lượng sách
         for (int i = 0; i < sachIds.size(); i++) {
             Integer sachId = sachIds.get(i);
             Integer soLuong = soLuongs.get(i);
@@ -46,20 +52,27 @@ public class HoaDonService {
             if (sach.getSoLuong() < soLuong) {
                 throw new RuntimeException("Số lượng sách không đủ: " + sach.getTenSach());
             }
+
+            // Tạo và lưu chi tiết hóa đơn
             ChiTietHoaDon chiTiet = new ChiTietHoaDon();
             chiTiet.setHoaDon(hoaDon);
             chiTiet.setSach(sach);
             chiTiet.setSoLuong(soLuong);
             chiTiet.setDonGia(sach.getDonGia());
             chiTietHoaDonRepository.save(chiTiet);
+
+            // Cập nhật số lượng sách
             sach.setSoLuong(sach.getSoLuong() - soLuong);
             if (sach.getSoLuong() == 0) {
                 sach.setTrangThai("Unavailable");
             }
             sachRepository.save(sach);
+
+            // Tính tổng tiền
             tongTien = tongTien.add(sach.getDonGia().multiply(new BigDecimal(soLuong)));
         }
 
+        // Cập nhật tổng tiền cho hóa đơn
         hoaDon.setTongTien(tongTien);
         hoaDonRepository.save(hoaDon);
     }
